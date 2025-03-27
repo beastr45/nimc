@@ -1,6 +1,11 @@
 # Things to implement
 
 - Implement shell argument parsing
+
+- Write a pipeline pattern for wrapper & lexing etc
+
+- Create custom compiler error types
+
 - Rewrite the Return enum used in the compile command
 - Implement a lexer & lexing data type
   - Is a vector holding the enum type of token

@@ -1,8 +1,8 @@
-# Some notes for quick refrence from books and online resources
+# Some notes for quick reference from books and online resources
 
 Fours steps to compilation.
 
-1. Lexer: Break the source code into a list of toekns
+1. Lexer: Break the source code into a list of tokens
 2. Parser: convert the list of tokens into and AST
 3. ASM gen: converts ast into assembly
 4. Code Emission: writes the assembly code into a file and pass it into an assembler.
