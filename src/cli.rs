@@ -6,17 +6,19 @@ use log::LevelFilter;
 use simplelog::{ColorChoice, Config, TermLogger, TerminalMode};
 
 /// This function will set up logging based on the users prefrence
-pub fn init_logging(level:LevelFilter) {
-    TermLogger::init(
+pub fn init_logging(level: LevelFilter) {
+    if let Err(e) = TermLogger::init(
         level,
         Config::default(),
         TerminalMode::Stdout,
         ColorChoice::Auto,
-    )
-    .unwrap();
+    ) {
+        eprintln!("Logging initialization failed, oops: {}", e);
+        std::process::exit(1);
+    }
 }
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum CompilerMode {
     Lex,
     Parse,
@@ -78,7 +80,6 @@ pub struct Cli {
 }
 
 impl Cli {
-
     /// Return the currrent compilation mode
     pub fn mode(&self) -> CompilerMode {
         if self.lex {
@@ -97,7 +98,7 @@ impl Cli {
     /// validate_input will check to make sure that the file path provided is
     /// correct and then returns the file path
     pub fn validate_input(&self) -> Result<PathBuf, String> {
-        if self.file_path.extension().map(|e| e != "c").unwrap_or(true) {
+        if self.file_path.extension().is_none_or(|e| e != "c") {
             return Err("Input file must have .c extension".to_string());
         }
         if !self.file_path.exists() {
@@ -119,14 +120,13 @@ impl Cli {
 
     /// Get a struct representing log mode set by user
     /// Pair this getter with the init_logging function
-    pub fn log_level(&self) -> LevelFilter{
+    pub fn log_level(&self) -> LevelFilter {
         if self.verbose {
             LevelFilter::Debug
         } else if self.quiet {
             LevelFilter::Error
-        }else {
+        } else {
             LevelFilter::Info
         }
-
     }
 }

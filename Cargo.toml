@@ -4,7 +4,11 @@ version = "0.1.0"
 edition = "2024"
 
 [dependencies]
+anyhow = "1.0.97"
 clap = { version = "4.5.32", features = ["derive"] }
+colored = "3.0.0"
 #log = { version = "0.4.27", features = ["release_max_level_warn"] }
 log = "0.4.27"
+regex = "1.11.1"
 simplelog = "0.12.2"
+thiserror = "2.0.12"
